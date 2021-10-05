@@ -3,13 +3,20 @@ const mongoose = require("mongoose")
 const menSchema = new mongoose.Schema({
     ranking: {
         type: Number,
+        validate(value) {
+            if (value < 0) {
+                throw new Error("ranking should not be negative");
+
+            }
+        },
         required: true,
         unique: true
     },
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        lowercase: true
     },
     dob: {
         type: Date,
@@ -19,10 +26,17 @@ const menSchema = new mongoose.Schema({
     country: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        uppercase: true
     },
     score: {
         type: Number,
+        validate(value) {
+            if (value < 0) {
+                throw new Error("score should not be negative");
+
+            }
+        },
         required: true,
         trim: true
     },
@@ -33,6 +47,6 @@ const menSchema = new mongoose.Schema({
 })
 
 // we are creating new collection
-const MensRanking = new mongoose.model("mens ", menSchema)
+const mens = new mongoose.model("Mens", menSchema)
 
-module.exports = MensRanking;
+module.exports = mens;
